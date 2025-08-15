@@ -1,0 +1,63 @@
+{
+  "extends": ["stylelint-config-standard-scss", "stylelint-config-html/astro"],
+  "overrides": [
+    {
+      "files": ["**/*.astro"],
+      "customSyntax": "postcss-html"
+    },
+    {
+      "files": ["**/*.scss"],
+      "customSyntax": "postcss-scss"
+    }
+  ],
+  "ignoreFiles": ["node_modules/**", "**/*.js", "**/*.ts", "**/*.mjs"],
+  "plugins": ["stylelint-scss", "stylelint-order"],
+  "rules": {
+    "selector-class-pattern": null,
+    "color-hex-length": "short",
+    "block-no-empty": true,
+    "order/order": [
+      [
+        "custom-properties",
+        "dollar-variables",
+        {
+          "type": "at-rule",
+          "name": "extend"
+        },
+        "declarations",
+        "at-rules",
+        {
+          "type": "at-rule",
+          "name": "media"
+        },
+        {
+          "type": "at-rule",
+          "name": "include"
+        },
+        "rules"
+      ]
+    ],
+    "order/properties-order": [
+      [
+        "display",
+        "position",
+        "top",
+        "right",
+        "bottom",
+        "left",
+        "width",
+        "height",
+        "margin",
+        "padding",
+        "color",
+        "background",
+        "font-family",
+        "font-size",
+        "line-height"
+      ],
+      {
+        "unspecified": "bottomAlphabetical"
+      }
+    ]
+  }
+}

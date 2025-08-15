@@ -1,0 +1,39 @@
+@use "sass:map";
+
+$breakpoints: (
+  md: 769px,
+  lg: 1025px,
+);
+
+// min-○○ 用の mixin
+@mixin mq-min($key) {
+  @if map.has-key($breakpoints, $key) {
+    @media (min-width: map.get($breakpoints, $key)) {
+      @content;
+    }
+  }
+}
+
+// max-○○ 用の mixin
+@mixin mq-max($key) {
+  @if map.has-key($breakpoints, $key) {
+    @media (width <=calc(map.get($breakpoints, $key) - 1px)) {
+      @content;
+    }
+  }
+}
+
+// クラスを自動生成
+@each $name, $size in $breakpoints {
+  .min-#{$name} {
+    @include mq-min($name) {
+      display: none !important;
+    }
+  }
+
+  .max-#{$name} {
+    @include mq-max($name) {
+      display: none !important;
+    }
+  }
+}
