@@ -1175,6 +1175,23 @@ axobject-query@^4.1.0:
   resolved "https://registry.yarnpkg.com/axobject-query/-/axobject-query-4.1.0.tgz#28768c76d0e3cff21bc62a9e2d0b6ac30042a1ee"
   integrity sha512-qIj0G9wZbMGNLjLmg1PT6v2mE9AH2zlnADJD/2tC6E00hgmhUOfEB6greHPAfLRSufHqROIUTkw6E+M3lH0PTQ==
 
+babylonjs-gltf2interface@^7.42.0:
+  version "7.54.3"
+  resolved "https://registry.yarnpkg.com/babylonjs-gltf2interface/-/babylonjs-gltf2interface-7.54.3.tgz#fe18e68083439f416019f0b495945cc654bda985"
+  integrity sha512-ZAWYFyE+SOczfWT19O4e3YRkCZ5i57SiD2eK2kqc+Tow/t9X1S45xgSFNuHZff++dd5BlVIEQDSnFV+McFLSnQ==
+
+babylonjs-viewer@^7.42.0:
+  version "7.42.0"
+  resolved "https://registry.yarnpkg.com/babylonjs-viewer/-/babylonjs-viewer-7.42.0.tgz#976049e8037bc16ed2eb9c4cb96a3e29b0de432b"
+  integrity sha512-0CW1EtW877pb2HrW/iQBnS8YeYe12aTj8qMvLqMTWnFAqppmRy3aufnUmx9Li1udUB2sNPOnu5hYTbpHRxIfcQ==
+  dependencies:
+    babylonjs-gltf2interface "^7.42.0"
+
+babylonjs@^8.23.1:
+  version "8.23.1"
+  resolved "https://registry.yarnpkg.com/babylonjs/-/babylonjs-8.23.1.tgz#793c9b73b5c801e1919ec7539355f593f6054dbd"
+  integrity sha512-5MMNKMrPcTDd5wX1Gfi0KPirmvcUzPqS4+PFv6h4/R9nkwSl+JsNr79F2w5tGQ4/hUAzdf18Jv7xa+289v1IZQ==
+
 bail@^2.0.0:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/bail/-/bail-2.0.2.tgz#d26f5cd8fe5d6f832a31517b9f7c356040ba6d5d"

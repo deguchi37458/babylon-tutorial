@@ -2,10 +2,14 @@
 import Footer from '@/layouts/Footer.astro'
 import Header from '@/layouts/Header.astro'
 import Layout from '@/layouts/Layout.astro'
+
+import Canvas from '@/components/Canvas.astro'
 ---
 
 <Layout title="Welcome to Astro." description="description">
   <Header />
-  <main>test</main>
+  <main>
+    <Canvas />
+  </main>
   <Footer />
 </Layout>

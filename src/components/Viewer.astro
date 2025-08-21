@@ -1,0 +1,32 @@
+---
+
+---
+
+<div class="wrapper">
+  <div class="viewer">
+    <babylon model="/assets/models/friction.glb"></babylon>
+  </div>
+</div>
+
+<style lang="scss">
+  .wrapper {
+    .viewer {
+      width: 100%;
+      height: 100vh;
+
+      nav-bar {
+        display: none !important;
+      }
+    }
+  }
+</style>
+
+<script>
+  import * as BabylonViewer from 'babylonjs-viewer'
+
+  function init() {
+    BabylonViewer.InitTags('my-tag')
+  }
+
+  document.addEventListener('DOMContentLoaded', init)
+</script>
