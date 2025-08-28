@@ -12,26 +12,163 @@
   const canvas = document.getElementById('renderCanvas') as HTMLCanvasElement
   const engine = new BABYLON.Engine(canvas, true)
 
+  // Scene
   const createScene = function () {
+    // Scene
     const scene = new BABYLON.Scene(engine)
 
-    BABYLON.MeshBuilder.CreateBox('box', {})
-
+    // Camera
     const camera = new BABYLON.ArcRotateCamera(
       'camera',
       -Math.PI / 2,
       Math.PI / 2.5,
-      15,
+      30,
       new BABYLON.Vector3(0, 0, 0),
     )
     camera.attachControl(canvas, true)
+
+    // Light
     const light = new BABYLON.HemisphericLight(
       'light',
       new BABYLON.Vector3(1, 1, 0),
     )
 
+    const ground = buildGround()
+    buildDwellings()
+
     return scene
   }
+
+  ///////////////////////////
+  // ** Functions START ** //
+  ///////////////////////////
+
+  // Ground
+  const buildGround = () => {
+    const ground = BABYLON.MeshBuilder.CreateGround('ground', {
+      width: 100,
+      height: 100,
+    })
+    const groundMat = new BABYLON.StandardMaterial('groundMat')
+    groundMat.diffuseColor = new BABYLON.Color3(0, 1, 0)
+    ground.material = groundMat
+
+    return ground
+  }
+
+  // Box
+  const buildBox = (width: number) => {
+    // faceUV
+    const faceUV = []
+    if (width == 2) {
+      faceUV[0] = new BABYLON.Vector4(0.4, 0, 0.6, 1.0)
+      faceUV[1] = new BABYLON.Vector4(0.4, 0, 0.6, 1.0)
+      faceUV[2] = new BABYLON.Vector4(0.6, 0.0, 1.0, 1.0)
+      faceUV[3] = new BABYLON.Vector4(0.0, 0.0, 0.4, 1.0)
+    } else {
+      faceUV[0] = new BABYLON.Vector4(0.25, 0, 0.5, 1.0)
+      faceUV[1] = new BABYLON.Vector4(0.75, 0, 1.0, 1.0)
+      faceUV[2] = new BABYLON.Vector4(0.5, 0.0, 0.75, 1.0)
+      faceUV[3] = new BABYLON.Vector4(0.0, 0.0, 0.25, 1.0)
+    }
+
+    // Mesh
+    const box = BABYLON.MeshBuilder.CreateBox('box', {
+      width: 2,
+      height: 1.5,
+      depth: width * 2,
+      faceUV: faceUV,
+      wrap: true,
+    })
+    box.position.y = 0.75
+
+    const boxMat = new BABYLON.StandardMaterial('boxMat')
+    if (width === 2) {
+      boxMat.diffuseTexture = new BABYLON.Texture(
+        'https://assets.babylonjs.com/environments/semihouse.png',
+      )
+    } else {
+      boxMat.diffuseTexture = new BABYLON.Texture(
+        'https://assets.babylonjs.com/environments/cubehouse.png',
+      )
+    }
+    box.material = boxMat
+
+    return box
+  }
+
+  // Roof
+  const buildRoof = (width: number) => {
+    const roof = BABYLON.MeshBuilder.CreateCylinder('roof', {
+      diameter: 3,
+      height: width * 2,
+      tessellation: 3,
+    })
+
+    roof.position.y = 2.25
+    roof.rotation.z = Math.PI / 2
+    roof.rotation.y = -Math.PI / 2
+
+    const roofMat = new BABYLON.StandardMaterial('roofMat')
+    roofMat.diffuseTexture = new BABYLON.Texture(
+      'https://assets.babylonjs.com/environments/roof.jpg',
+    )
+    roof.material = roofMat
+
+    return roof
+  }
+
+  const buildHouse = (width: number) => {
+    const box = buildBox(width)
+    const roof = buildRoof(width)
+
+    const house = BABYLON.Mesh.MergeMeshes(
+      [box, roof],
+      true,
+      false,
+      null,
+      false,
+      true,
+    )
+    return house
+  }
+
+  const buildDwellings = () => {
+    const detached_house = buildHouse(1)
+    detached_house.rotation.y = -Math.PI / 16
+    detached_house.position.x = -7
+    detached_house.position.z = 2.5
+
+    const semi_house = buildHouse(2)
+    semi_house.rotation.y = -Math.PI / 16
+    semi_house.position.x = -10
+    semi_house.position.z = 3
+
+    // 配置
+    const places = [] // 配列 [家のタイプ, 向き, x, z]
+    places.push([1, -Math.PI / 16, -7, 2.5])
+    places.push([2, -Math.PI / 16, -10, 3])
+    places.push([2, -Math.PI / 16, -3, 4])
+    places.push([2, -Math.PI / 3, 1.5, 6])
+    places.push([1, -Math.PI / 16, -7, -5.5])
+
+    // 家のインスタンスを作っていって配列に突っ込んでる
+    const houses = []
+    for (let i = 0; i < places.length; i++) {
+      if (places[i][0] === 1) {
+        houses[i] = detached_house.createInstance('house' + i)
+      } else {
+        houses[i] = semi_house.createInstance('house' + i)
+      }
+      houses[i].rotation.y = places[i][1]
+      houses[i].position.x = places[i][2]
+      houses[i].position.z = places[i][3]
+    }
+  }
+
+  /////////////////////////
+  // ** Functions END ** //
+  /////////////////////////
 
   const scene = createScene()
 
