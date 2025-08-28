@@ -8,6 +8,7 @@
 
 <script>
   import * as BABYLON from 'babylonjs'
+  import '@babylonjs/loaders'
 
   const canvas = document.getElementById('renderCanvas') as HTMLCanvasElement
   const engine = new BABYLON.Engine(canvas, true)
@@ -166,9 +167,12 @@
     }
   }
 
-  /////////////////////////
-  // ** Functions END ** //
-  /////////////////////////
+  /////////////////////
+  // ** Car START ** //
+  /////////////////////
+
+  // TODO: このモデルを読み込みたい
+  // https://playground.babylonjs.com/#C17X37
 
   const scene = createScene()
 
